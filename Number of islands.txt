@@ -1,0 +1,45 @@
+class Solution {
+
+    private static final int[][] DIRS = {
+        {-1, 0},
+        {1, 0},
+        {0, -1},
+        {0, 1}
+    };
+
+    private void explore(char[][] grid, int r, int c) {
+
+        grid[r][c] = '0';
+
+        for (int[] dir : DIRS) {
+
+            int nr = r + dir[0];
+            int nc = c + dir[1];
+
+            if (nr < 0 || nr >= grid.length ||
+                nc < 0 || nc >= grid[0].length ||
+                grid[nr][nc] != '1') {
+                continue;
+            }
+
+            explore(grid, nr, nc);
+        }
+    }
+
+    public int numIslands(char[][] grid) {
+
+        int count = 0;
+
+        for (int r = 0; r < grid.length; r++) {
+            for (int c = 0; c < grid[0].length; c++) {
+
+                if (grid[r][c] == '1') {
+                    count++;
+                    explore(grid, r, c);
+                }
+            }
+        }
+
+        return count;
+    }
+}
